@@ -16,21 +16,21 @@ namespace Xler {
 #define THREAD_CALLBACK_DEF(name) DWORD CALLBACK name(void * args)
 #endif
 			enum ThreadStatus {
-				THREAD_STATUS_INIT = 0,//ĞÂÏß³Ì³õÊ¼»¯
-				THREAD_STATUS_RUNNING = 1, //ÔËĞĞÖĞ
-				THREAD_STATUS_EXIT = -1, //ÍË³öÖĞ
+				THREAD_STATUS_INIT = 0,//æ–°çº¿ç¨‹åˆå§‹åŒ–
+				THREAD_STATUS_RUNNING = 1, //è¿è¡Œä¸­
+				THREAD_STATUS_EXIT = -1, //é€€å‡ºä¸­
 			};
 			public:
 				Thread(void);
 				virtual ~Thread(void);
-				virtual void run(void) = 0;		//ÒµÎñ½Ó¿Ú
-				bool start(void);				//Æô¶¯Ïß³Ì
-				inline xl_pid_t	get_thread_id()	{ return tid; } //»ñÈ¡Ïß³ÌID
+				virtual void run(void) = 0;		//ä¸šåŠ¡æ¥å£
+				bool start(void);				//å¯åŠ¨çº¿ç¨‹
+				inline xl_pid_t	get_thread_id()	{ return tid; } //è·å–çº¿ç¨‹ID
 			private:
-				static THREAD_CALLBACK_DEF(thread_callback_func);//¿ªÊ¼Ïß³ÌµÄ»Øµ÷
+				static THREAD_CALLBACK_DEF(thread_callback_func);//å¼€å§‹çº¿ç¨‹çš„å›è°ƒ
 
-				xl_pid_t tid; //Ïß³ÌID
-				ThreadStatus status; //Ïß³Ì×´Ì¬
+				xl_pid_t tid; //çº¿ç¨‹ID
+				ThreadStatus status; //çº¿ç¨‹çŠ¶æ€
 		};
 	}
 }

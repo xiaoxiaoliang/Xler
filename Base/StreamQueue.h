@@ -1,5 +1,5 @@
 #pragma once
-
+#include <semaphore.h>
 namespace Xler {
 	namespace Base {
 		class Stream;
@@ -11,7 +11,9 @@ namespace Xler {
 			Stream *pop();
 			void push(Stream *stream);
 		private:
-			std::queue<Stream*> queue;
+			std::queue<Stream*> queue; //数据流队列
+			sem_t m_sem;	//信号量
+			pthread_mutex_t m_mutex; //互斥锁
 		};
 	}
 }

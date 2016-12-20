@@ -1,6 +1,6 @@
 #pragma once
-#include "def\Config.h"
-#include "def\CallBack.h"
+#include "def/Config.h"
+#include "def/CallBack.h"
 namespace Xler {
 	using namespace Def;
 	class Server {
