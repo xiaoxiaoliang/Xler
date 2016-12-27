@@ -9,13 +9,17 @@ namespace Xler {
 			NPT_UDP,
 		};
 		struct NetProSet {
+			NetProSet(NetProType type, const char* ip, uint16_t port) {
+				this->type = type; this->ip.assign(ip); this->port = port;
+			}
 			NetProType type;
 			std::string ip;
 			uint16_t port;
 		};
+		typedef std::vector<NetProSet> NetProSetVec;
 		struct ServerConf {
 			int rec_num;
-			std::vector<NetProSet> net_lisen;
+			NetProSetVec net_lisen;
 			ServerConf(void) {
 				rec_num = 1;
 				net_lisen.clear();

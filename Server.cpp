@@ -1,4 +1,5 @@
 #include "Server.h"
+#include "Net/Listener.h"
 using namespace Xler;
 Server::Server(void) {
 	this->conf = 0;
@@ -19,6 +20,8 @@ void Server::on_start(CbStart cb) {
 
 void Server::start(void) {
 	if(this->conf == 0) this->conf = new ServerConf();
+	Net::LISTENER->init(this);
+	Net::LISTENER->create();
 	call_backs.cb_start(this);
 }
 
