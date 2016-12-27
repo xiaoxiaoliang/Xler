@@ -8,7 +8,7 @@ void OnStart(const Xler::Server *ser) {
 
 int main(void) {
 	Xler::Server *ser = new Xler::Server();
-	ser->OnStart(OnStart);
-	ser->Start();
+	ser->on_start(OnStart);
+	ser->start();
 	return 0;
 }

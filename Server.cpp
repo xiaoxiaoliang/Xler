@@ -9,14 +9,19 @@ Server::~Server(void) {
 
 }
 
-void Server::Set(ServerConf *conf) {
+void Server::set(const ServerConf *conf) {
 	this->conf = conf;
 }
 
-void Server::OnStart(CbStart cb) {
+void Server::on_start(CbStart cb) {
 	call_backs.cb_start = cb;
 }
 
-void Server::Start(void) {
+void Server::start(void) {
+	if(this->conf == 0) this->conf = new ServerConf();
 	call_backs.cb_start(this);
+}
+
+const ServerConf* Server::get_conf(void) {
+	return this->conf;
 }

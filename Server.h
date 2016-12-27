@@ -7,11 +7,12 @@ namespace Xler {
 	public:
 		Server(void);
 		virtual ~Server(void);
-		void Set(ServerConf *conf);
-		void OnStart(CbStart cb);
-		void Start(void);
+		void set(const ServerConf *conf);
+		void on_start(CbStart cb);
+		void start(void);
+		const ServerConf* get_conf(void);
 	private:
-		ServerConf *conf;
+		const ServerConf *conf;
 		ServerCallBacks call_backs;
 	};
 }
