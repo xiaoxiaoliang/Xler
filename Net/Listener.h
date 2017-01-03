@@ -1,10 +1,5 @@
-/*
- * Listener.h
- *
- *  Created on: Dec 20, 2016
- *      Author: xiaoliang
- */
 #pragma once
+#include <list>
 #include "../Def/Config.h"
 namespace Xler {
 	class Server;
@@ -21,13 +16,13 @@ namespace Xler {
 		private:
 			Listener();
 			virtual ~Listener();
-			bool listen_tcp(const Def::NetProSet &set);
-			bool listen_udp(const Def::NetProSet &set);
+			int listen_tcp(const Def::NetProSet &set);
+			int listen_udp(const Def::NetProSet &set);
 
 			static Listener *instance;
 			Server *ser;
-			int tcp_fd;
-			int udp_fd;
+			std::list<int> tcp_fd;
+			std::list<int> udp_fd;
 		};
 
 #define LISTENER Listener::getInstance()

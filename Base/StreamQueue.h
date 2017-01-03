@@ -1,4 +1,5 @@
 #pragma once
+#include <queue>
 #include <semaphore.h>
 namespace Xler {
 	namespace Base {

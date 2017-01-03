@@ -1,6 +1,7 @@
 #pragma once
 #include "Def/CallBack.h"
 #include "Def/Config.h"
+#include "Base/Stream.h"
 namespace Xler {
 	using namespace Def;
 	class Server {
@@ -10,6 +11,8 @@ namespace Xler {
 		void set(const ServerConf *conf);
 		void on_start(CbStart cb);
 		void start(void);
+		void on_receive(void);
+		void receive(Base::Stream *data);
 		const ServerConf* get_conf(void);
 	private:
 		const ServerConf *conf;

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <queue>
 #include "StreamQueue.h"
 #include "Stream.h"
 
