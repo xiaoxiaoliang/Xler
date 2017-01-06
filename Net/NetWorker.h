@@ -1,10 +1,10 @@
 #pragma once
+#include <stdint.h>
 #include "../Base/StreamQueue.h"
 
 namespace Xler {
 	class Server;
 	namespace Net {
-
 		class NetWorker {
 		public:
 			static NetWorker* getInstance() {

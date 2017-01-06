@@ -1,6 +1,7 @@
 #include <cstddef>
 #include "NetWorker.h"
 #include "../Server.h"
+#include "../Base/StreamManager.h"
 
 using namespace Xler::Net;
 NetWorker* NetWorker::instance = NULL;
@@ -21,5 +22,6 @@ void NetWorker::run(void) {
 	while(true) {
 		Base::Stream *data = this->msg_list.pop();
 		this->ser->receive(data);
+		Base::STREAMMANAGER->put(data);
 	}
 }
