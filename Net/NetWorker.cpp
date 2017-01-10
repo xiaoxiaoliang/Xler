@@ -15,7 +15,6 @@ NetWorker::~NetWorker() {
 
 void NetWorker::start(Server *ser) {
 	this->ser = ser;
-	this->run();
 }
 
 void NetWorker::run(void) {

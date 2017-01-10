@@ -11,8 +11,8 @@ namespace Xler {
 					instance = new Listener();
 				return instance;
 			}
-			void init(Server *ser);
-			void create(void);
+			void create(Server *ser);
+			int add_listen(const Def::NetProSet &set);
 		private:
 			Listener();
 			virtual ~Listener();

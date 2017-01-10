@@ -19,10 +19,10 @@ namespace Xler {
 		typedef std::vector<NetProSet> NetProSetVec;
 		struct ServerConf {
 			int rec_num;
-			NetProSetVec net_lisen;
+			NetProSetVec net_listen;
 			ServerConf(void) {
 				rec_num = 1;
-				net_lisen.clear();
+				net_listen.clear();
 			}
 		};
 	}

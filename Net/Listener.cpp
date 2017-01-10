@@ -16,25 +16,26 @@ Listener::Listener() {
 Listener::~Listener() {
 }
 
-void Listener::init(Server *ser) {
-	this->ser = ser;
+void Listener::create(Server *ser) {
+	const ServerConf *conf = ser->get_conf();
+	for(Def::NetProSetVec::const_iterator it = conf->net_listen.begin();
+			it != conf->net_listen.end(); ++it) {
+		add_listen(*it);
+	}
 }
 
-void Listener::create(void) {
-	const ServerConf *conf = ser->get_conf();
-	for(Def::NetProSetVec::const_iterator it = conf->net_lisen.begin();
-			it != conf->net_lisen.end(); ++it) {
-		switch(it->type) {
-			case NPT_TCP: {
-				listen_tcp(*it);
-				break;
-			};
-			case NPT_UDP: {
-				listen_udp(*it);
-				break;
-			};
-		}
+int Listener::add_listen(const Def::NetProSet &set) {
+	switch(set.type) {
+		case NPT_TCP: {
+			return listen_tcp(set);
+			break;
+		};
+		case NPT_UDP: {
+			return listen_udp(set);
+			break;
+		};
 	}
+	return -1;
 }
 
 int Listener::listen_tcp(const Def::NetProSet &set) {
