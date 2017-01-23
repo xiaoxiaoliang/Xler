@@ -3,14 +3,17 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <sys/epoll.h>
 #include "Listener.h"
 #include "../Server.h"
+
 using namespace Xler::Net;
 Listener* Listener::instance = NULL;
 Listener::Listener() {
 	ser = 0;
 	tcp_fd.clear();
 	udp_fd.clear();
+	epoll_fd = 0;
 }
 
 Listener::~Listener() {
@@ -22,6 +25,22 @@ void Listener::create(Server *ser) {
 			it != conf->net_listen.end(); ++it) {
 		add_listen(*it);
 	}
+	//init epoll
+	epoll_fd = epoll_create(this->tcp_fd.size()+this->udp_fd.size());
+	//add all listen fd to epll
+	struct epoll_event ev;
+	ev.events=EPOLLIN|EPOLLET;
+	for(StdIntList::const_iterator it = this->tcp_fd.begin();
+			it != this->tcp_fd.end(); ++it) {
+		ev.data.fd = *it;
+		epoll_ctl(epoll_fd, EPOLL_CTL_ADD, *it, &ev);
+	}
+	for(StdIntList::const_iterator it = this->udp_fd.begin();
+			it != this->udp_fd.end(); ++it) {
+		ev.data.fd = *it;
+		epoll_ctl(epoll_fd, EPOLL_CTL_ADD, *it, &ev);
+	}
+	start();
 }
 
 int Listener::add_listen(const Def::NetProSet &set) {
@@ -56,4 +75,23 @@ int Listener::listen_tcp(const Def::NetProSet &set) {
 
 int Listener::listen_udp(const Def::NetProSet &set) {
 	return true;
+}
+
+void Listener::run(void) {
+	int fd_num = this->tcp_fd.size()+this->udp_fd.size();
+	struct epoll_event events[fd_num];
+	struct sockaddr_in clientaddr;
+	socklen_t clilen;
+	while(true) {
+		int nfds = epoll_wait(epoll_fd,events,fd_num, -1);
+		for(int i=0; i < nfds; ++i) {
+			int connfd = accept(events[i].data.fd,(sockaddr *)&clientaddr, &clilen);
+			if(connfd < 0) {
+				 perror("connfd < 0");
+				 abort();
+			}
+			char *str = inet_ntoa(clientaddr.sin_addr);
+			printf("%s", str);
+		}
+	}
 }

@@ -1,10 +1,11 @@
 #pragma once
-#include <list>
+#include "../Def/StdType.h"
 #include "../Def/Config.h"
+#include "../Base/Thread.h"
 namespace Xler {
 	class Server;
 	namespace Net {
-		class Listener {
+		class Listener : public Base::Thread {
 		public:
 			static Listener* getInstance() {
 				if (instance == NULL)
@@ -13,6 +14,7 @@ namespace Xler {
 			}
 			void create(Server *ser);
 			int add_listen(const Def::NetProSet &set);
+			virtual void run(void);
 		private:
 			Listener();
 			virtual ~Listener();
@@ -21,8 +23,9 @@ namespace Xler {
 
 			static Listener *instance;
 			Server *ser;
-			std::list<int> tcp_fd;
-			std::list<int> udp_fd;
+			StdIntList tcp_fd;
+			StdIntList udp_fd;
+			int epoll_fd;
 		};
 
 #define LISTENER Listener::getInstance()

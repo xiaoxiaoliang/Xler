@@ -15,7 +15,7 @@ public:
 
 int main(void) {
 	Xler::Def::ServerConf cfg;
-	cfg.net_listen.push_back(NetProSet(Def::NPT_TCP, "127.0.0.1", 8001));
+	cfg.net_listen.push_back(NetProSet(Def::NPT_TCP, "0.0.0.0", 8001));
 	cfg.net_listen.push_back(NetProSet(Def::NPT_TCP, "127.0.0.1", 8002));
 	cfg.net_listen.push_back(NetProSet(Def::NPT_TCP, "127.0.0.1", 8003));
 	Xler::Server *ser = new Xler::Server();
